@@ -1,3 +1,4 @@
+import numpy as np
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
@@ -11,5 +12,14 @@ containers = driver.find_elements(
     by="xpath", value='//div[@class="article-recommendation-container"]')
 
 for container in containers:
-    container.find_element(by="xpath", value='./div/span')
-# /div[@class="article-recommendation-container"]/a/div/div/div/div/span
+    container.find_element(by="xpath", value='./div/span').text
+    # /div[@class="article-recommendation-container"]/a/div/div/div/div/span
+    size = np.char.count(container.find_element(
+        by="xpath", value='./div/span').text, ' ') + 1
+    if size > 5:
+        Title = container.find_element(by="xpath", value='./div/span').text
+    else:
+        Subtitle = container.find_element(by="xpath", value='./div/span').text
+# //div[@class="article-recommendation-container"]/a
+    link = container.find_enlement(
+        by="xpath", value='./a').get_atttribute('href')
