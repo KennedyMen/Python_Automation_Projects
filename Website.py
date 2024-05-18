@@ -10,7 +10,9 @@ driver = webdriver.Chrome(service=service)
 driver.get(website)
 containers = driver.find_elements(
     by="xpath", value='//div[@class="article-recommendation-container"]')
-
+titles = []
+subtitles = []
+links = []
 for container in containers:
     container.find_element(by="xpath", value='./div/span').text
     # /div[@class="article-recommendation-container"]/a/div/div/div/div/span
@@ -23,3 +25,6 @@ for container in containers:
 # //div[@class="article-recommendation-container"]/a
     link = container.find_enlement(
         by="xpath", value='./a').get_atttribute('href')
+    titles.append(Title)
+    subtitles.append(Subtitle)
+    links.append(link)
