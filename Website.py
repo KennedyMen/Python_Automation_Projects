@@ -1,6 +1,8 @@
+import pandas as pd
 import numpy as np
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+
 
 website = "https://www.the-sun.com/entertainment/11399168/mary-kate-ashley-olsen-reunite-full-house-cast/"
 path = "/Users/033103kennedymensah/Downloads/STASH_ON_DEVICE/chromedriver-mac-arm64/chromedriver"
@@ -28,3 +30,5 @@ for container in containers:
     titles.append(Title)
     subtitles.append(Subtitle)
     links.append(link)
+
+dictionary = pd.DataFrame({'Title': titles, 'Subtitle': subtitles, 'Link': links}).to_csv(
