@@ -3,7 +3,10 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.actions.wheel_input import ScrollOrigin
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 website = "https://www.the-sun.com/entertainment/11399168/mary-kate-ashley-olsen-reunite-full-house-cast/"
 path = "/Users/033103kennedymensah/Downloads/STASH_ON_DEVICE/chromedriver-mac-arm64/chromedriver"
@@ -12,7 +15,12 @@ service = Service(executable_path=path)
 driver = webdriver.Chrome(service=service)
 
 driver.get(website)
-driver.implicitly_wait(10)
+iframe = driver.find_element(By.XPATH, "/html/body/footer/div/div[2]/h3")
+ActionChains(driver)\
+    .scroll_to_element(iframe)\
+    .perform()
+WebDriverWait(driver, 10).until(
+    EC.presence_of_element_located((By.XPATH, '//div[@class="article-recommendation-container"]')))
 containers = driver.find_elements(
     by="xpath", value='//div[@class="article-recommendation-container"]')
 print(len(containers))
