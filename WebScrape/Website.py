@@ -1,4 +1,5 @@
 import pandas as pd
+from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
@@ -41,7 +42,9 @@ for container in containers:
     subtitles.append(Subtitle)
 
 dictionary = {'Title': titles, 'Subtitle': subtitles, 'Link': links}
+filepath = Path('/Users/033103kennedymensah/Automation/WebScrape/Sun.csv')
+filepath.parent.mkdir(parents=True, exist_ok=True)
 df = pd.DataFrame(dictionary)
-df.to_csv('Sun.csv')
+df.to_csv(filepath)
 
 driver.quit()
