@@ -32,6 +32,8 @@ print(len(containers))
 titles = []
 subtitles = []
 links = []
+title = driver.title
+print(title)
 for container in containers:
     # /div[@class="article-recommendation-container"]/a/div/div/div/div/span
     Title = container.find_element(
