@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
@@ -21,19 +20,17 @@ titles = []
 subtitles = []
 links = []
 for container in containers:
-    string = container.find_element(
-        by="xpath", value='//span[@class="article-recommendation__kicker theme-tech"]').text
     # /div[@class="article-recommendation-container"]/a/div/div/div/div/span
     Title = container.find_element(
-        by="xpath", value='//span[@class="article-recommendation__headline"]').text
-    titles.append(Title)
+        by="xpath", value='./a//span[1]').text
     Subtitle = container.find_element(
-        by="xpath", value='//span[@class="article-recommendation__kicker theme-tech"]').text
-    subtitles.append(Subtitle)
+        by="xpath", value='./a//span[2]').text
 # //div[@class="article-recommendation-container"]/a
     link = container.find_element(
-        by="xpath", value='//div[@class="article-recommendation-container"]/a').get_attribute('href')
+        by="xpath", value='./a').get_attribute('href')
     links.append(link)
+    titles.append(Title)
+    subtitles.append(Subtitle)
 
 dictionary = {'Title': titles, 'Subtitle': subtitles, 'Link': links}
 df = pd.DataFrame(dictionary)
