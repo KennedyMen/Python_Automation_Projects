@@ -1,4 +1,5 @@
 from openpyxl import load_workbook
+from openpyxl.chart import BarChart, Reference
 
 wb = load_workbook(
     '/Users/033103kennedymensah/Automation/Excel_Setup/pivot_table.xlsx')
@@ -13,3 +14,19 @@ print(max_column)
 print(min_row)
 print(max_row)
 # --------------------------------------------------------------------------
+
+# Stanard Pivot Table for any setup
+BarChart = BarChart()
+
+Data = Reference(sheet, min_row=min_row, max_row=max_row,
+                 min_col=min_column+1, max_col=max_column)
+catagories = Reference(sheet, min_row=min_row+1,
+                       max_row=max_row, min_col=min_column, max_col=min_column)
+
+
+BarChart.add_data(Data, titles_from_data=True)
+BarChart.set_categories(catagories)
+sheet.add_chart(BarChart, "B12")
+BarChart.title = "Sales by Product Line"
+BarChart.style = 5
+wb.save('barchart.xlsx')
