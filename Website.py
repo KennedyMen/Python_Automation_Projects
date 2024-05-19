@@ -22,23 +22,21 @@ subtitles = []
 links = []
 for container in containers:
     string = container.find_element(
-        by="xpath", value='//div[@class="article-recommendation-container"]/a/div/div/div/div/span').text
+        by="xpath", value='//span[@class="article-recommendation__kicker theme-tech"]').text
     # /div[@class="article-recommendation-container"]/a/div/div/div/div/span
-    size = np.char.count(string, ' ') + 1
-    if size < 5:
-        Title = container.find_element(
-            by="xpath", value='//div[@class="article-recommendation-container"]/a/div/div/div/div/span').text
-        titles.append(Title)
-    else:
-        Subtitle = container.find_element(
-            by="xpath", value='//div[@class="article-recommendation-container"]/a/div/div/div/div/span').text
-        subtitles.append(Subtitle)
+    Title = container.find_element(
+        by="xpath", value='//span[@class="article-recommendation__headline"]').text
+    titles.append(Title)
+    Subtitle = container.find_element(
+        by="xpath", value='//span[@class="article-recommendation__kicker theme-tech"]').text
+    subtitles.append(Subtitle)
 # //div[@class="article-recommendation-container"]/a
     link = container.find_element(
         by="xpath", value='//div[@class="article-recommendation-container"]/a').get_attribute('href')
     links.append(link)
 
-dictionary = ({'Title': titles, 'Subtitle': subtitles, 'Link': links})
-pd.DataFrame(dictionary).to_csv('Website.csv')
+dictionary = {'Title': titles, 'Subtitle': subtitles, 'Link': links}
+df = pd.DataFrame(dictionary)
+df.to_csv('Sun.csv')
 
 driver.quit()
