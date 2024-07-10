@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "Demo"
 version = "0.1.0"
-description = ""poetry config pypi-token.pypi <my-token>
+description = ""
 authors = ["KennedyMen03032731 <152940711+KennedyMen03032731@users.noreply.github.com>"]
 readme = "README.md"
 
