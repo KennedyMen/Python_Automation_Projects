@@ -1,0 +1,4 @@
+var config = {
+    MY_KEY : '14002341a5db4547ac38ad95492473b0',
+    REGION : "eastus"
+}

@@ -5,10 +5,7 @@ import PySimpleGUI as sg
 from pathlib import Path
 import duplicates as dup
 
-subscription_key = "36141e3b7be442e3a09a06e8e93e4ae8"
-region = "eastus"
-CSVPath = Path(
-    '/Users/033103kennedymensah/Python_Automation_Projects/Text FIle Setup')
+
 CSVPath.parent.mkdir(parents=True, exist_ok=True)
 
 
@@ -61,7 +58,6 @@ def setup_for_anki(primary, secondary, output, media_path):
                  'Back': french_list, 'Audio': sound_list}
     Datalist = pd.DataFrame(Full_Dict)
     Datalist.to_csv(output)
-    dupes = dup.list_all_duplicates(media_path, to_csv=True, csv_path='Text FIle Setup/dupe_list', ext='.jpg')
 
 
 remove_blank_lines("Text FIle Setup/Phrases en anglasi.txt")
