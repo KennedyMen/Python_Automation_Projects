@@ -2,11 +2,13 @@ import os
 import pandas as pd
 import azure.cognitiveservices.speech as speechsdk
 import PySimpleGUI as sg
-import duplicates as dup
 from pathlib import Path
+import duplicates as dup
+
 subscription_key = "36141e3b7be442e3a09a06e8e93e4ae8"
 region = "eastus"
-CSVPath = Path('/Users/033103kennedymensah/Python_Automation_Projects/Text FIle Setup')
+CSVPath = Path(
+    '/Users/033103kennedymensah/Python_Automation_Projects/Text FIle Setup')
 CSVPath.parent.mkdir(parents=True, exist_ok=True)
 
 
@@ -27,7 +29,7 @@ def convert_words_to_mp3(word_list, output_dir):
         os.makedirs(output_dir)
     sound_list = []
     for word in word_list:
-        filename = f"{word}.mp3"
+        filename = f"{output_dir}/{word}.mp3"
         text_to_speech(word, filename)
         sound_list.append(f"[sound:{filename}]")
     return sound_list
@@ -43,6 +45,7 @@ def remove_blank_lines(file):
     ]
     file.write_text('\n'.join(filtered))
 
+
 def setup_for_anki(primary, secondary, output, media_path):
     output = str(output)
     remove_blank_lines(primary)
@@ -54,10 +57,33 @@ def setup_for_anki(primary, secondary, output, media_path):
     for i in range(len(secondary_list)):
         secondary_list[i] = secondary_list[i].replace('\t', ' ')
     sound_list = convert_words_to_mp3(secondary_list, media_path)
-    Full_Dict = {'Front': primary_list,
-                 'Back': secondary_list, 'Audio': sound_list}
+    Full_Dict = {'Front': english_list,
+                 'Back': french_list, 'Audio': sound_list}
     Datalist = pd.DataFrame(Full_Dict)
     Datalist.to_csv(output)
     dupes = dup.list_all_duplicates(media_path, to_csv=True, csv_path='Text FIle Setup/dupe_list', ext='.jpg')
 
 
+remove_blank_lines("Text FIle Setup/Phrases en anglasi.txt")
+remove_blank_lines("Text FIle Setup/Phrases en Francais .txt")
+
+
+english_list = open(
+    "Text FIle Setup/Phrases en anglasi.txt").read().splitlines()
+french_list = open(
+    "Text FIle Setup/Phrases en Francais .txt").read().splitlines()
+
+for i in range(len(english_list)):
+    english_list[i] = english_list[i].replace('\t', ' ')
+for i in range(len(french_list)):
+    french_list[i] = french_list[i].replace('\t', ' ')
+
+
+sound_list = convert_words_to_mp3(
+    french_list, "/Users/033103kennedymensah/Python_Automation_Projects/Text FIle Setup/media")
+
+Full_Dict = {'Front': english_list, 'Back': french_list, 'Audio': sound_list}
+
+Datalist = pd.DataFrame(Full_Dict)
+Datalist.to_csv(
+    '/Users/033103kennedymensah/Python_Automation_Projects/Text FIle Setup/Study.csv')
