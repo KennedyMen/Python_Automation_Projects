@@ -1,5 +1,7 @@
 import PySimpleGUI as sg  # pip install pysimplegui
 import os
+from os.path import isfile, join
+from os import listdir
 import pandas as pd
 import azure.cognitiveservices.speech as speechsdk
 import PySimpleGUI as sg

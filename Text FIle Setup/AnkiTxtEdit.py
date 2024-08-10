@@ -1,4 +1,7 @@
 import os
+from os.path import isfile, join
+from os import listdir
+import numpy as np
 import pandas as pd
 import azure.cognitiveservices.speech as speechsdk
 import PySimpleGUI as sg
@@ -56,3 +59,9 @@ def setup_for_anki(primary, secondary, output, media_path, API, REGION):
                  'Back': secondary_list, 'Audio': sound_list}
     Datalist = pd.DataFrame(Full_Dict)
     Datalist.to_csv(output)
+
+
+def file_deletion_list(media):
+
+    dupes = dup.list_all_duplicates(media)
+    dupes = dupes.to_list()
