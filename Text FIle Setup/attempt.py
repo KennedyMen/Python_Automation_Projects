@@ -4,9 +4,10 @@ import azure.cognitiveservices.speech as speechsdk
 import PySimpleGUI as sg
 from pathlib import Path
 import duplicates as dup
-
-
-CSVPath.parent.mkdir(parents=True, exist_ok=True)
+subscription_key = "14002341a5db4547ac38ad95492473b0"
+region = "eastus"
+French_words = "Mots de etudie Francais.txt"
+English_words = "studying words english.txt"
 
 
 def text_to_speech(word, filename):
@@ -28,7 +29,7 @@ def convert_words_to_mp3(word_list, output_dir):
     for word in word_list:
         filename = f"{output_dir}/{word}.mp3"
         text_to_speech(word, filename)
-        sound_list.append(f"[sound:{filename}]")
+        sound_list.append(f"[sound:{word}.mp3]")
     return sound_list
 
 
@@ -60,14 +61,14 @@ def setup_for_anki(primary, secondary, output, media_path):
     Datalist.to_csv(output)
 
 
-remove_blank_lines("Text FIle Setup/Phrases en anglasi.txt")
-remove_blank_lines("Text FIle Setup/Phrases en Francais .txt")
+remove_blank_lines(f"{French_words}")
+remove_blank_lines(f"{English_words}")
 
 
 english_list = open(
-    "Text FIle Setup/Phrases en anglasi.txt").read().splitlines()
+    f"{English_words}").read().splitlines()
 french_list = open(
-    "Text FIle Setup/Phrases en Francais .txt").read().splitlines()
+    f"{French_words}").read().splitlines()
 
 for i in range(len(english_list)):
     english_list[i] = english_list[i].replace('\t', ' ')
@@ -82,4 +83,4 @@ Full_Dict = {'Front': english_list, 'Back': french_list, 'Audio': sound_list}
 
 Datalist = pd.DataFrame(Full_Dict)
 Datalist.to_csv(
-    '/Users/033103kennedymensah/Python_Automation_Projects/Text FIle Setup/Study.csv')
+    '/Users/033103kennedymensah/Python_Automation_Projects/Text FIle Setup/Study_phrases_Lesson.csv')
